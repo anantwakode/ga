@@ -1,5 +1,5 @@
 //Using the HiveMQ public Broker, with a random client Id
-var client = new Messaging.Client("broker.mqttdashboard.com", 8000, "myclientid_ant", 10);
+var client = new Messaging.Client("test.mosquitto.org", 8081, "myclientid_ant", 10);
 //Gets  called if the websocket/mqtt connection gets disconnected for any reason
 //client.onConnectionLost = function (responseObject) {
     //Depending on your scenario you could implement a reconnect logic here
@@ -39,9 +39,11 @@ var publish = function (payload, topic, qos) {
 function PumpSwitchOnClick() {
     if (document.getElementById('pumpswitch').checked) {
         publish('11', 'GA/14978110/CSV', 2);
+		publish('11', 'GA/14978110/SSV', 2);
     }
     else {
         publish('10', 'GA/14978110/CSV', 2);
+		publish('10', 'GA/14978110/SSV', 2);
     }
 }
 
@@ -64,7 +66,7 @@ function setup() {
     //Connect Options
     var options = {
         timeout: 3, //Gets Called if the connection has sucessfully been established
-        useSSL: false,
+        useSSL: true,
         onSuccess: function () {
             //alert("Connected");
             //document.getElementById('txt').innerHTML = "connected" ;
