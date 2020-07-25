@@ -64,7 +64,7 @@ function setup() {
     //Connect Options
     var options = {
         timeout: 3, //Gets Called if the connection has sucessfully been established
-        useSSL: true,
+        useSSL: false,
         onSuccess: function () {
             //alert("Connected");
             //document.getElementById('txt').innerHTML = "connected" ;
