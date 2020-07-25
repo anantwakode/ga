@@ -1,4 +1,4 @@
-var cacheName = 'anantwakode.github.io';
+const cacheName = 'anantwakode.github.io';
 var filesToCache = ['.', '/', '/index.html', '/css/style.css', '/js/mqttws31.js', '/js/mymqtt.js', '/js/jquery.min.js'];
 
 var deferredPrompt;
