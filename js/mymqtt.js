@@ -64,7 +64,7 @@ function setup() {
     //Connect Options
     var options = {
         timeout: 3, //Gets Called if the connection has sucessfully been established
-        useSSL: false,
+        useSSL: true,
         onSuccess: function () {
             //alert("Connected");
             //document.getElementById('txt').innerHTML = "connected" ;
@@ -87,31 +87,6 @@ function setup() {
     var t = setTimeout(loop, 1000);
 }
 
-function scan113(url) {
-    var xmlhttp = new XMLHttpRequest();
-    var result;
-    xmlhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            var myArr = JSON.parse(this.responseText);
-            document.getElementById("log").innerHTML = this.responseText;
-        }
-    };
-    xmlhttp.open("GET", url, true);
-    xmlhttp.send();
-}
-
-function scan1(url) {
-    var xmlhttp = new XMLHttpRequest();
-    var result;
-    xmlhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            var myArr = JSON.parse(this.responseText);
-            document.getElementById("log1").innerHTML = this.responseText;
-        }
-    };
-    xmlhttp.open("GET", url, true);
-    xmlhttp.send();
-}
 
 function loop() {
     var today = new Date();
