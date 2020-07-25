@@ -1,4 +1,4 @@
-const cacheName = 'anantwakode.github.io';
+var cacheName = 'hello-pwa';
 var filesToCache = ['./', './index.html', './css/style.css', './js/mqttws31.js', './js/main.js', './js/mymqtt.js', './js/jquery.min.js'];
 
 var deferredPrompt;
