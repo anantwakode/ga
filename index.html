@@ -30,10 +30,10 @@
         <div id="device">
             <label for="dname">Device:</label>
             <input type="text" id="dname" name="dname"/>
-            <input type="button" value="Connect" onclick='OnConnectClick()'>
+            <input type="button" id="conbtn" value="Connect" onclick='OnConnectClick()'>
         </div>
         <h3>--------------------------------------------</h3>
-        <div id="did"> <span>Device ID : </span> <span style="color:green">GA1234 </span> </div>
+        <div id="did"> <span>Device ID : </span> <span id="devid" style="color:green"></span> </div>
         <div id="status"> <span>Device Status : </span> <span id="devicestatus" style="color:green">Connected</span> </div> <span>Device Date/Time :</span><span id="devicetime" style="color:green"></span>
         <h3>--------------------------------------------</h3>
         <div id="ps"> <span class="foo">
@@ -43,8 +43,9 @@
         </div>
         <div id="pump"> <span>Pump Status : </span> <span id="pumpstatus" style="color:red">Off</span> </div>
         <h3>--------------------------------------------</h3> 
-        <span id="log">log</span> 
-        <span id="log1">log1</span> 
+        <span>
+		<textarea id="log" name="log" rows="10" cols="40"></textarea>
+		</span>
     </div>
 </body>
 
