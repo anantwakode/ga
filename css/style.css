@@ -2,6 +2,10 @@ body {
     font-family: sans-serif;
 }
 
+/* Solid border */
+hr.solid {
+  border-top: 3px solid #bbb;
+}
 
 /* Make content area fill the entire browser window */
 
@@ -20,6 +24,10 @@ html,
 .container {
     margin: auto;
     text-align: center;
+	/*background-image: url("../bg.png");
+	background-repeat: no-repeat; 
+	background-size: cover; /* Resize the background image to cover the entire container */
+	
 }
 
 .title {
@@ -27,7 +35,7 @@ html,
 }
 
 h2 {
-    text-align: left;
+    text-align: center;
     #text-transform: uppercase;
     #color: #4CAF50;
 }
