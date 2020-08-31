@@ -92,6 +92,9 @@ function setup() {
     var cdid = getCookie("did");
     document.getElementById('dname').value = cdid;
 	
+	if(cdid == "")
+		return;
+	
 	did = "GA/"+cdid;
 	document.getElementById('devid').innerHTML = did;
 	LogMessage(did+" Connecting...");
