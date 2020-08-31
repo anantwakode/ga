@@ -1,14 +1,7 @@
 //Using the HiveMQ public Broker, with a random client Id
-var client = new Messaging.Client("test.mosquitto.org", 8081, "myclientid_ant", 10);
-//Gets  called if the websocket/mqtt connection gets disconnected for any reason
-//client.onConnectionLost = function (responseObject) {
-    //Depending on your scenario you could implement a reconnect logic here
-    //alert("connection lost: " + responseObject.errorMessage);
-    //document.getElementById('txt').innerHTML = "Disconnected" ;
-    //sleep(1000);
-//};
-
-var did;
+var rid = "cid" + Math.floor(Math.random()*1000000000);
+var client = new Messaging.Client("test.mosquitto.org", 8081, rid, 30);
+var did=0;
 var connectionstate=0;
 
 //Gets  called if the websocket/mqtt connection gets disconnected for any reason
@@ -16,6 +9,7 @@ client.onConnectionLost = function (responseObject) {
      //Depending on your scenario you could implement a reconnect logic here
      //alert("connection lost: " + responseObject.errorMessage);
 	 connectionstate=0;
+	 //document.getElementById('devicestatus').innerHTML = "Not Connected";
 	 LogMessage(did+" Disconnected...");
 };
 
@@ -25,12 +19,13 @@ client.onMessageArrived = function (message) {
     //$('#messages').append('<span>Topic: ' + message.destinationName + '  | ' + message.payloadString + '</span><br/>');
     if (message.destinationName == did+"/DVS") {
         document.getElementById('devicestatus').innerHTML = message.payloadString;
+		LogMessage(message.payloadString);
     }
-    if (message.destinationName == did+"/DVT") {
+    else if (message.destinationName == did+"/DVT") {
         document.getElementById('devicetime').innerHTML = message.payloadString;
     }
-    if (message.destinationName == did+"/SSV") {
-        document.getElementById('pumpstatus').innerHTML = message.payloadString;
+    else if (message.destinationName == did+"/SSV") {
+        //document.getElementById('pumpstatus').innerHTML = message.payloadString;
         if (message.payloadString == "11") {
             document.getElementById('pumpswitch').checked = true;
 			LogMessage("Drip started...");
@@ -53,11 +48,11 @@ var publish = function (payload, topic, qos) {
 function PumpSwitchOnClick() {
     if (document.getElementById('pumpswitch').checked) {
         publish('11', did+'/CSV', 2);
-		publish('11', did+'/SSV', 2);
+		//publish('11', did+'/SSV', 2);
     }
     else {
         publish('10', did+'/CSV', 2);
-		publish('10', did+'/SSV', 2);
+		//publish('10', did+'/SSV', 2);
     }
 }
 
@@ -86,6 +81,7 @@ function LogMessage(msg) {
     var h = today.getHours();
     var m = today.getMinutes();
     var s = today.getSeconds();
+	h = checkTime(h);
     m = checkTime(m);
     s = checkTime(s);
     var ts = h + ":" + m + ":" + s;
@@ -99,9 +95,10 @@ function setup() {
 	did = "GA/"+cdid;
 	document.getElementById('devid').innerHTML = did;
 	LogMessage(did+" Connecting...");
+	
     //Connect Options
     var options = {
-        timeout: 3, //Gets Called if the connection has sucessfully been established
+        timeout: 30, //Gets Called if the connection has sucessfully been established
         useSSL: true,
         onSuccess: function () {
             client.subscribe(did+'/DVS', { //14978110
@@ -113,11 +110,13 @@ function setup() {
             client.subscribe(did+'/SSV', {
                 qos: 2
             });
+			//document.getElementById('devicestatus').innerHTML = "Connected";
 			LogMessage("Connected");
 			connectionstate=1;
         }, //Gets Called if the connection could not be established
         onFailure: function (message) {
 			connectionstate=0;
+			//document.getElementById('devicestatus').innerHTML = "Not Connected";
             LogMessage(message.errorMessage);
         }
     };
@@ -125,15 +124,15 @@ function setup() {
     var t = setTimeout(loop, 1000);
 }
 
-
 function loop() {
-    var today = new Date();
+    /*var today = new Date();
     var h = today.getHours();
     var m = today.getMinutes();
     var s = today.getSeconds();
+	h = checkTime(h);
     m = checkTime(m);
-    s = checkTime(s);
-    document.getElementById('devicetime').innerHTML = h + ":" + m + ":" + s;
+    s = checkTime(s);*/
+    //document.getElementById('devicetime').innerHTML = h + ":" + m + ":" + s;
     //scan113("http://192.168.43.113/state");
     //scan1("http://192.168.4.1/state");
 	if(connectionstate == 0)
