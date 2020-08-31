@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Hello World</title>
+    <title>Garden Automation</title>
     
     <link rel="manifest" href="./manifest.json">
     <link rel="stylesheet" href="./css/style.css">
@@ -26,23 +26,26 @@
 
 <body class="fullscreen">
     <div class="container">
-        <h2>Garden Automation</h2>
+		
+        <h2>
+		<img src="./favicon.ico" class="w3-round" alt="Norway">
+		Garden Automation
+		</h2>
         <div id="device">
             <label for="dname">Device:</label>
             <input type="text" id="dname" name="dname"/>
             <input type="button" id="conbtn" value="Connect" onclick='OnConnectClick()'>
         </div>
-        <h3>--------------------------------------------</h3>
+        <hr class="solid">
         <div id="did"> <span>Device ID : </span> <span id="devid" style="color:green"></span> </div>
-        <div id="status"> <span>Device Status : </span> <span id="devicestatus" style="color:green">Connected</span> </div> <span>Device Date/Time :</span><span id="devicetime" style="color:green"></span>
-        <h3>--------------------------------------------</h3>
+        <div id="status"> <span>Device Status : </span> <span id="devicestatus" style="color:green">Offline</span> </div> 
+		<span>Device Date/Time :</span><span id="devicetime" style="color:green">00:00:00</span>
+        <hr class="solid">
         <div id="ps"> <span class="foo">
-        <span >Pump Switch : </span>
             <label class="switch" />
-            <input type="checkbox" id="pumpswitch" onclick='PumpSwitchOnClick()' /> <span class="slider round" /> </span>
+            <input type="checkbox" id="pumpswitch" onclick="PumpSwitchOnClick()"/> <span class="slider round" /> </span>
         </div>
-        <div id="pump"> <span>Pump Status : </span> <span id="pumpstatus" style="color:red">Off</span> </div>
-        <h3>--------------------------------------------</h3> 
+        <hr class="solid">
         <span>
 		<textarea id="log" name="log" rows="10" cols="40"></textarea>
 		</span>

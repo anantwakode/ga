@@ -1,4 +1,4 @@
-var cacheName = 'hello-pwa';
+var cacheName = 'ga';
 var filesToCache = ['./', './index.html', './css/style.css', './js/mqttws31.js', './js/main.js', './js/mymqtt.js', './js/jquery.min.js'];
 
 var deferredPrompt;
