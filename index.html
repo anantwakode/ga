@@ -22,20 +22,19 @@
     <script src='./js/mqttws31.js' type="text/javascript"></script>
     <script src='./js/mymqtt.js' type="text/javascript"></script>
 	<script src='./js/main.js' type="text/javascript"></script>
+	
 </head>
 
 <body class="fullscreen">
     <div class="container">
+        <h2><img src="./favicon.ico" class="w3-round" alt="Norway">&nbsp Smart Gardening</h2>
+        <button class="collapsiblefix" type="checkbox" checked >Device </button>
+		<div class="content1">
+		<br/>
+        <label for="dname">Device:</label>
+        <input type="text" id="dname" name="dname"/>
+        <input type="button" id="conbtn" value="Connect" onclick='OnConnectClick()'>
 		
-        <h2>
-		<img src="./favicon.ico" class="w3-round" alt="Norway">
-		Garden Automation
-		</h2>
-        <div id="device">
-            <label for="dname">Device:</label>
-            <input type="text" id="dname" name="dname"/>
-            <input type="button" id="conbtn" value="Connect" onclick='OnConnectClick()'>
-        </div>
         <hr class="solid">
         <div id="did"> <span>Device ID : </span> <span id="devid" style="color:green"></span> </div>
         <div id="status"> <span>Device Status : </span> <span id="devicestatus" style="color:green">Offline</span> </div> 
@@ -45,11 +44,56 @@
             <label class="switch" />
             <input type="checkbox" id="pumpswitch" onclick="PumpSwitchOnClick()"/> <span class="slider round" /> </span>
         </div>
-        <hr class="solid">
-        <span>
+		</div>
+        <br/>
+		<button class="collapsible"> Settings </button>
+		<div class="content">
+			<br/>
+			<input id='auto' type='checkbox' name='auto' checked>
+			<label for='st'>Auto Schedule </label>&nbsp &nbsp
+			<input id='manual' type='checkbox' name='manual' checked>
+			<label for='st'> Manual (Over Internet) </label>
+			<hr class="solid">
+			<label for='ds'>Watering Schedule</label>
+			<select id='dsch' name='dsch'><option value=6>Every 6 Hour</option><option value=8>Every 8 Hour</option><option value=12>Every 12 hour</option> <option value=24>Every 24 hour</option></select>
+			<br/><br/>
+			<label for='ds'>Duration (in Minutes)</label>
+			<input id='dur' type='number' size='8' min="0" max="1000" name='time' value='5'>
+			<br/><br/>
+			<input id='upst' type='checkbox' name='upst' checked> 
+			<label for='pst'>&nbsp Prefered Start Time</label>
+			<input id='pst' type='time' name='pst' value='07:00'>
+			<br/>
+			<input type="button" id="conbtn" size="10" value="Apply" onclick='OnApplyClick()'>
+			<br/>
+		</div>
+	
+		<br/>
+		<button class="collapsible">Logs</button>
+		<div class="content">
+		<br/>
 		<textarea id="log" name="log" rows="10" cols="40"></textarea>
-		</span>
+		<br/>
+		</div>
+		<br/>
     </div>
 </body>
+
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.maxHeight){
+      content.style.maxHeight = null;
+    } else {
+      content.style.maxHeight = content.scrollHeight + "px";
+    } 
+  });
+}
+</script>
 
 </html>
