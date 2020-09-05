@@ -4,6 +4,8 @@ var client = new Messaging.Client("test.mosquitto.org", 8081, rid, 30);
 var did=0;
 var connectionstate=0;
 
+
+//14936902
 //Gets  called if the websocket/mqtt connection gets disconnected for any reason
 client.onConnectionLost = function (responseObject) {
      //Depending on your scenario you could implement a reconnect logic here
@@ -35,6 +37,18 @@ client.onMessageArrived = function (message) {
 			LogMessage("Drip stopped...");
         }
     }
+	else if (message.destinationName == did+"/SCH") {
+        //document.getElementById('devicestatus').innerHTML = message.payloadString;
+		var schobj = JSON.parse(message.payloadString);
+		document.getElementById('auto').checked = schobj.auto;
+		document.getElementById('manual').checked = schobj.manual;
+		document.getElementById('dsch').value = schobj.dsch;
+		document.getElementById('dur').value = schobj.dur;
+		document.getElementById('upst').checked = schobj.upst;
+		document.getElementById('pst').value = schobj.pst;
+	
+		LogMessage(message.payloadString);
+    }
 };
 //Creates a new Messaging.Message Object and sends it to the HiveMQ MQTT Broker
 var publish = function (payload, topic, qos) {
@@ -62,6 +76,21 @@ function setCookie(cname, cvalue, exdays) {
 
 function getCookie(cname) {
     return localStorage.getItem(cname);
+}
+
+function OnApplyClick() {
+	var schobj={"auto":true, "manual":true, "dsch":0, "dur":5, "upst":true, "pst":"00:00 AM"};
+	schobj.auto = document.getElementById('auto').checked;
+	schobj.manual = document.getElementById('manual').checked;
+	schobj.dsch = document.getElementById('dsch').value;
+	schobj.dur = document.getElementById('dur').value;
+	schobj.upst = document.getElementById('upst').checked;
+	schobj.pst = document.getElementById('pst').value;
+	
+	var sschobj = JSON.stringify(schobj);
+	publish(sschobj, did+'/SCH', 2);
+	 
+	LogMessage(sschobj);
 }
 
 function OnConnectClick() {
@@ -113,6 +142,9 @@ function setup() {
             client.subscribe(did+'/SSV', {
                 qos: 2
             });
+			client.subscribe(did+'/SCH', {
+                qos: 2
+            });
 			//document.getElementById('devicestatus').innerHTML = "Connected";
 			LogMessage("Connected");
 			connectionstate=1;
@@ -151,3 +183,5 @@ function checkTime(i) {
     }; // add zero in front of numbers < 10
     return i;
 }
+
+
