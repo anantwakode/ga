@@ -121,7 +121,7 @@ function setup() {
     var cdid = getCookie("did");
     document.getElementById('dname').value = cdid;
 	
-	if(cdid == "")
+	if(cdid == null || cdid == "")
 		return;
 	
 	did = "GA/"+cdid;
